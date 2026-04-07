@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青年共产主义小组</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", sans-serif;
+            background-color: #F9F9F9; 
+            color: #A80000; 
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        /* 透明导航栏 */
+        header {
+            position: absolute; top: 0; width: 100%;
+            padding: 20px 40px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 100;
+        }
+        
+        /* Logo 区域动效 */
+        .logo {
+            font-size: 26px;
+            font-weight: 900; 
+            color: #CC0000; 
+            text-decoration: none; 
+            letter-spacing: 1px;
+            /* Logo也去掉了阴影，保持整体扁平纯粹 */
+            text-shadow: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: left center;
+        }
+        .logo .star {
+            display: inline-block;
+            margin-right: 8px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.15); }
+        .logo:hover .star {
+            transform: scale(1.4) rotate(36deg);
+            color: #FFD700;
+        }
+
+        /* 导航栏实心红底白字特效 */
+        .nav-links a {
+            color: #CC0000; 
+            text-decoration: none; 
+            font-size: 18px;
+            font-weight: bold; 
+            margin-left: 20px;
+            text-shadow: none; /* 去除阴影 */
+            cursor: pointer; 
+            display: inline-block;
+            padding: 8px 20px; 
+            border-radius: 6px; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        .nav-links a:hover {
+            color: #FFFFFF; 
+            background-color: #CC0000; 
+            text-shadow: none; 
+            transform: scale(1.08) translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(204, 0, 0, 0.25); 
+        }
+
+        /* 全屏首屏：使用 bg.jpg */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+                url('bg.jpg'); 
+            background-size: cover; background-position: center top; padding: 0 20px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 5rem; font-weight: 900; color: #DD0000; 
+            letter-spacing: 6px; margin-bottom: 20px;
+            /* ★ 完全去除了阴影和发光，纯粹的扁平质感 ★ */
+            text-shadow: none;
+            opacity: 0; animation: fadeInUp 1s ease-out forwards;
+        }
+        .hero p {
+            font-size: 1.8rem; font-weight: bold; color: #A80000; 
+            letter-spacing: 4px; 
+            /* ★ 完全去除了阴影和发光 ★ */
+            text-shadow: none;
+            opacity: 0; animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        /* 使命区 */
+        .mission {
+            background-color: #FFFFFF; padding: 70px 20px;
+            text-align: center; border-top: 4px solid #CC0000; 
+        }
+        .mission-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; flex-wrap: wrap; gap: 30px;
+        }
+        .mission-item {
+            flex: 1; min-width: 280px; padding: 35px 30px; background-color: #FFF5F5; border: 1px solid #FFCCCC; border-radius: 12px; transition: all 0.4s ease;
+            position: relative; 
+        }
+        .mission-item:hover { transform: translateY(-8px); border-color: #CC0000; box-shadow: 0 15px 30px rgba(204, 0, 0, 0.15); }
+        .mission-item h2 { font-size: 28px; color: #CC0000; margin-bottom: 16px; }
+        .mission-item p { font-size: 16px; color: #555555; text-align: justify; line-height: 1.7; }
+        
+        .mission-item.clickable {
+            cursor: pointer;
+            padding-bottom: 50px; 
+        }
+        .mission-item.clickable .enter-hint {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            font-size: 15px; font-weight: bold; color: #CC0000; opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .mission-item.clickable:hover .enter-hint {
+            opacity: 1; color: #FF0000; letter-spacing: 2px;
+        }
+
+        /* 文章列表区域 */
+        .articles-section { background-color: #FFFFFF; padding: 70px 20px; border-top: 1px solid #FFCCCC; }
+        .articles-container { max-width: 1000px; margin: 0 auto; }
+        .articles-container h2 { text-align: center; font-size: 32px; color: #CC0000; margin-bottom: 40px; letter-spacing: 2px; }
+        .article-card { background: #FFF5F5; border: 1px solid #FFCCCC; border-radius: 16px; padding: 25px 30px; transition: all 0.4s ease; }
+        .article-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(204, 0, 0, 0.1); border-color: #CC0000; }
+        .article-title { font-size: 24px; font-weight: bold; color: #CC0000; margin-bottom: 12px; }
+        .article-excerpt { font-size: 16px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+        .read-more { display: inline-block; background-color: #CC0000; color: white; text-decoration: none; padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: bold; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .read-more:hover { background-color: #A80000; transform: scale(1.05); box-shadow: 0 4px 12px rgba(204, 0, 0, 0.2); }
+
+        footer { background-color: #CC0000; text-align: center; padding: 40px 20px; }
+        footer h3 { font-size: 26px; color: #FFFFFF; letter-spacing: 4px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="logo" id="logoLink"><span class="star">★</span> 马列毛主义万岁！</a>
+        <div class="nav-links">
+            <a id="homeLink">主页</a>
+            <a href="#mission">使命</a>
+            <a href="#articles-section">理论</a>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <h1>青年共产主义小组</h1>
+        <p>学习 · 批判 · 行动</p>
+    </section>
+
+    <section id="mission" class="mission">
+        <div class="mission-container">
+            <div class="mission-item clickable" onclick="window.location.href='classics.html'">
+                <h2>学习马列经典</h2>
+                <p>抛弃庸俗化的学术解释，回归马列毛主义的原典。用历史唯物主义和辩证唯物主义武装头脑，掌握分析当代社会的终极武器。</p>
+                <div class="enter-hint">进入文库 ➔</div>
+            </div>
+            <div class="mission-item">
+                <h2>立足无产阶级</h2>
+                <p>理论不能脱离实践。青年必须走向工农，倾听劳动者的声音，深刻理解现代生产关系下的剥削形式，为无产阶级利益发声。</p>
+            </div>
+            <div class="mission-item">
+                <h2>探索革命道路</h2>
+                <p>不盲从、不教条。在数字时代和全新的生产力条件下，思考社会主义革命的新路径，为最终的共产主义事业蓄力。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="articles-section" class="articles-section">
+        <div class="articles-container">
+            <h2>理论文章</h2>
+            <div class="article-card">
+                <div class="article-title">《反资本主义复辟论》</div>
+                <div class="article-excerpt">
+                    这是一篇分析社会主义政权为何走向复辟的理论文章。文章从物质匮乏、脑体分工、参政时间不足、外部压力等五个结构性矛盾出发，解释了官僚化的根源，并提出了“窗口期竞速”和“消解官僚化物质基础”的反复辟思路。
+                </div>
+                <a href="article.html" class="read-more">阅读全文</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h3>全世界无产者，联合起来！</h3>
+    </footer>
+
+    <script>
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        document.getElementById('logoLink').addEventListener('click', scrollToTop);
+        document.getElementById('homeLink').addEventListener('click', scrollToTop);
+    </script>
+</body>
+</html>
