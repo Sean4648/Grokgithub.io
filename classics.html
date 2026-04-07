@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>经典文库 - 青年共产主义小组</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #Fdfdfd; 
+            color: #333333; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            background-color: #FFFFFF;
+            border-bottom: 3px solid #CC0000;
+            padding: 20px 50px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px; font-weight: 900; color: #CC0000; 
+            text-decoration: none; letter-spacing: 2px;
+            display: flex; align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: left center;
+        }
+        .logo .star {
+            display: inline-block; margin-right: 8px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.15); }
+        .logo:hover .star {
+            transform: scale(1.4) rotate(36deg); color: #FFD700;
+        }
+
+        .nav-links a {
+            color: #CC0000; text-decoration: none; font-size: 18px;
+            font-weight: bold; margin-left: 30px; transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            color: #FFFFFF; background-color: #CC0000;
+            padding: 5px 10px; border-radius: 4px;
+        }
+
+        .library-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background-color: #FFF5F5;
+            border-bottom: 2px solid #FFCCCC;
+        }
+        .library-header h1 {
+            font-size: 40px; color: #CC0000; letter-spacing: 5px; margin-bottom: 10px;
+        }
+        .library-header p {
+            font-size: 18px; color: #888; letter-spacing: 2px;
+        }
+
+        main { flex: 1; padding: 60px 50px; max-width: 1400px; margin: 0 auto; width: 100%; }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .book-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            border: 1px solid #EEE;
+        }
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(204,0,0,0.15);
+            border-color: #FFCCCC;
+        }
+
+        .book-cover {
+            background: linear-gradient(135deg, #A80000 0%, #CC0000 100%);
+            border-left: 12px solid #730000;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFD700;
+            font-size: 32px;
+            font-family: "楷体", "STKaiti", serif;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            padding: 20px;
+            text-align: center;
+        }
+        .book-cover.long-title { font-size: 26px; }
+
+        .book-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .book-title { font-size: 22px; color: #CC0000; font-weight: bold; margin-bottom: 8px; }
+        .book-author { font-size: 14px; color: #666; margin-bottom: 20px; border-bottom: 1px solid #EEE; padding-bottom: 10px; }
+        .book-quote { 
+            font-size: 16px; color: #555; font-style: italic; 
+            margin-bottom: 25px; line-height: 1.6; flex: 1;
+        }
+        
+        .download-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .btn-read {
+            text-align: center; background-color: #CC0000; color: #FFF;
+            text-decoration: none; font-size: 14px; font-weight: bold;
+            padding: 10px 5px; border-radius: 4px; transition: all 0.3s ease;
+        }
+        .btn-read:hover { background-color: #A80000; transform: scale(1.02); }
+        .btn-single { grid-column: span 2; font-size: 16px; padding: 12px 0; }
+
+        footer { background-color: #CC0000; text-align: center; padding: 40px 20px; }
+        footer h3 { font-size: 26px; color: #FFFFFF; letter-spacing: 4px; }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            .library-header h1 { font-size: 28px; }
+            main { padding: 30px 15px; }
+            .books-grid { grid-template-columns: 1fr; gap: 20px; }
+            .book-cover { height: 140px; font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo"><span class="star">★</span> 马列毛主义万岁！</a>
+        <div class="nav-links">
+            <a href="index.html">返回主页</a>
+        </div>
+    </header>
+
+    <div class="library-header">
+        <h1>马列毛经典文库</h1>
+        <p>重温经典 · 汲取真理的力量</p>
+    </div>
+
+    <main>
+        <div class="books-grid">
+            
+            <div class="book-card">
+                <div class="book-cover">共产党宣言</div>
+                <div class="book-info">
+                    <div class="book-title">《共产党宣言》</div>
+                    <div class="book-author">马克思 / 恩格斯</div>
+                    <div class="book-quote">“代替那存在着阶级和阶级对立的资产阶级旧社会的...是一个联合体。”</div>
+                    <a href="https://www.marxists.org/chinese/marx/01.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">资本论</div>
+                <div class="book-info">
+                    <div class="book-title">《资本论》第一卷</div>
+                    <div class="book-author">卡尔·马克思</div>
+                    <div class="book-quote">“揭示现代社会的经济运动规律，是本书的最终目的。”</div>
+                    <a href="https://www.marxists.org/chinese/marx/capital/index.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">马恩选集</div>
+                <div class="book-info">
+                    <div class="book-title">《马克思恩格斯选集》</div>
+                    <div class="book-author">马克思 / 恩格斯</div>
+                    <div class="book-quote">“马克思主义的整个世界观不是教义，而是方法。”</div>
+                    <div class="download-group">
+                        <a href="《马克思恩格斯选集》 第一卷.pdf" target="_blank" class="btn-read">第一卷</a>
+                        <a href="《马克思恩格斯选集》 第二卷.pdf" target="_blank" class="btn-read">第二卷</a>
+                        <a href="《马克思恩格斯选集》 第三卷.pdf" target="_blank" class="btn-read">第三卷</a>
+                        <a href="《马克思恩格斯选集》 第四卷.pdf" target="_blank" class="btn-read">第四卷</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">反杜林论</div>
+                <div class="book-info">
+                    <div class="book-title">《反杜林论》</div>
+                    <div class="book-author">弗里德里希·恩格斯</div>
+                    <div class="book-quote">“一切社会变迁和政治变革的终极原因，应当到生产方式和交换方式的变更中去寻找。”</div>
+                    <a href="https://www.marxists.org/chinese/marx-engels/20/001.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">国家与革命</div>
+                <div class="book-info">
+                    <div class="book-title">《国家与革命》</div>
+                    <div class="book-author">弗拉基米尔·列宁</div>
+                    <div class="book-quote">“国家是阶级矛盾不可调和的产物和表现。”</div>
+                    <a href="https://www.marxists.org/chinese/lenin/191708-09/index.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">列宁选集</div>
+                <div class="book-info">
+                    <div class="book-title">《列宁选集》</div>
+                    <div class="book-author">弗拉基米尔·列宁</div>
+                    <div class="book-quote">“没有革命的理论，就不会有革命的运动。”</div>
+                    <div class="download-group">
+                        <a href="列宁选集[第1卷]2012年版.pdf" target="_blank" class="btn-read">第一卷</a>
+                        <a href="列宁选集[第2卷]2012年版.pdf" target="_blank" class="btn-read">第二卷</a>
+                        <a href="列宁选集[第3卷]2012年版.pdf" target="_blank" class="btn-read">第三卷</a>
+                        <a href="列宁选集[第4卷]2012年版.pdf" target="_blank" class="btn-read">第四卷</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover long-title">帝国主义是资本主义的最高阶段</div>
+                <div class="book-info">
+                    <div class="book-title">《帝国主义论》</div>
+                    <div class="book-author">弗拉基米尔·列宁</div>
+                    <div class="book-quote">“帝国主义是发展到垄断组织和金融资本统治阶段的资本主义。”</div>
+                    <a href="https://www.marxists.org/chinese/lenin/15.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">毛泽东选集</div>
+                <div class="book-info">
+                    <div class="book-title">《毛泽东选集》</div>
+                    <div class="book-author">毛泽东</div>
+                    <div class="book-quote">“谁是我们的敌人？谁是我们的朋友？这个问题是革命的首要问题。”</div>
+                    <a href="https://www.marxists.org/chinese/maozedong/index.htm" target="_blank" class="btn-read btn-single">阅读</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <h3>全世界无产者，联合起来！</h3>
+    </footer>
+
+</body>
+</html>
