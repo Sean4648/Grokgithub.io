@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>革命影音资料库 - 青年共产主义小组</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", sans-serif;
+            background-color: #F9F9F9; color: #A80000; line-height: 1.6; font-size: 18px;
+        }
+
+        header {
+            position: absolute; top: 0; width: 100%;
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100;
+        }
+        .logo {
+            font-size: 26px; font-weight: 900; color: #CC0000; text-decoration: none; display: flex; align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: left center;
+        }
+        .logo .star { display: inline-block; margin-right: 8px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .logo:hover { transform: scale(1.1); }
+        .logo:hover .star { transform: scale(1.3) rotate(36deg); color: #FFD700; }
+
+        .hero {
+            height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; background-color: #FFFFFF; border-bottom: 3px solid #CC0000;
+        }
+        .hero h1 { font-size: 3rem; font-weight: 900; color: #DD0000; letter-spacing: 4px; }
+        .hero p { font-size: 1.3rem; font-weight: bold; margin-top: 10px; }
+
+        .content-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        /* 影音卡片网格 */
+        .media-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px;
+        }
+
+        .media-card {
+            background: #FFFFFF; border: 2px solid #CC0000; border-radius: 16px; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(204, 0, 0, 0.05);
+        }
+        .media-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(204, 0, 0, 0.15); }
+        
+        .media-thumb {
+            width: 100%; height: 200px; background-color: #A80000; display: flex;
+            justify-content: center; align-items: center; color: white; font-size: 50px;
+        }
+/* 视频播放器专属样式 */
+        .media-video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* 保证视频画面填满区域且不变形 */
+            background-color: #000; /* 加载前的黑色背景，更具电影感 */
+            display: block;
+            border-bottom: 1px solid #CC0000; /* 与下方文字区形成庄重的分割线 */
+        }
+        
+        .media-info { padding: 25px; }
+        .media-info h3 { color: #CC0000; margin-bottom: 10px; font-size: 22px; }
+        .media-info p { color: #666; font-size: 16px; margin-bottom: 20px; height: 50px; overflow: hidden; }
+
+        .btn-play {
+            display: inline-block; background-color: #CC0000; color: white; text-decoration: none;
+            padding: 8px 25px; border-radius: 20px; font-weight: bold; font-size: 14px; transition: 0.3s;
+        }
+        .btn-play:hover { background-color: #A80000; transform: scale(1.05); }
+/* “/* “人民万岁”互动文字彩蛋 - 终极物理引擎版 */
+        .wansui-interactive {
+            display: inline-block; cursor: pointer; letter-spacing: 2px;
+            font-weight: 900; color: #A80000;
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        .wansui-interactive:hover {
+            transform: scale(1.1); letter-spacing: 5px; color: #FF0000;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* 抛弃 animation，改用基础平滑状态 */
+        .wansui-playing {
+            color: #FF0000 !important;
+            transform: scale(1.15) !important;
+            letter-spacing: 6px !important;
+            transition: all 0.6s ease-in-out !important; /* 脉动速度 */
+        }
+        
+        /* 脉动的顶峰状态 */
+        .wansui-peak {
+            transform: scale(1.3) !important;
+            letter-spacing: 10px !important;
+        }
+
+        .back-nav { text-align: center; margin: 60px 0; }
+        footer { background-color: #CC0000; text-align: center; padding: 40px 20px; color: white; }
+
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } }
+.modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #FFFFFF; margin: 5% auto; padding: 40px; border: 1px solid #CC0000;
+            width: 90%; max-width: 850px; 
+            border-radius: 20px; text-align: center; position: relative;
+            animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .close-btn { position: absolute; right: 20px; top: 15px; font-size: 30px; color: #CC0000; cursor: pointer; font-weight: bold; }
+        
+        .modal-video { width: 100%; margin-top: 20px; outline: none; border: none; background: #000; border-radius: 8px; }
+
+      
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo"><span class="star">★</span> 马列毛主义万岁！</a>
+    </header>
+
+    <section class="hero">
+        <h1>影音资料库</h1>
+        <p id="wansui-btn" class="wansui-interactive">人民万岁!</p>
+        
+        <audio id="wansuiAudio" src="wansui_[cut_3sec].mp3" preload="auto"></audio>
+    </section>
+
+    <div class="content-container">
+        <div class="media-grid">
+            <div class="media-card">
+            <div class="media-thumb">🎬</div>
+            <div class="media-info">
+                <h3>历史影像：开国大典</h3>
+                <p>重温那个改变中国历史进程的神圣时刻。</p>
+                <a class="btn-play" onclick="toggleVideoModal(true)" style="cursor: pointer;">开始观看</a>
+            </div>
+        </div>
+
+            <div class="media-card">
+                <div class="media-thumb">🎥</div>
+                <div class="media-info">
+                    <h3>电影：《决裂》</h3>
+                    <p>深刻反映社会主义教育路线与旧教育制度的尖锐斗争。</p>
+                    <a href="#" class="btn-play">开始观看</a>
+                </div>
+            </div>
+
+            <div class="media-card">
+                <div class="media-thumb">📻</div>
+                <div class="media-info">
+                    <h3>历史录音：开国大典</h3>
+                    <p>重温那个改变中国历史进程的神圣时刻。</p>
+                    <a href="#" class="btn-play">立即收听</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-nav">
+            <a href="memorial.html" class="btn-play" style="padding: 12px 40px; font-size: 18px;">➔ 返回</a>
+        </div>
+    </div>
+<div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleVideoModal(false)">&times;</span>
+            <p style="font-weight: bold; font-size: 24px; margin-bottom: 20px; color: #CC0000;">开国大典</p>
+            
+            <video id="videoPlayer" class="modal-video" controls>
+                <source src="6-12.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+        </div>
+    </div>
+
+    <footer>
+        <h3>用感官触碰历史，用理论指导未来。</h3>
+    </footer>
+<script>
+        // 获取弹窗和播放器对象
+        const videoModal = document.getElementById('videoModal');
+        const videoPlayer = document.getElementById('videoPlayer');
+
+        // 定义开关逻辑
+        function toggleVideoModal(show) {
+            if (show) {
+                videoModal.style.display = "block"; // 显示弹窗
+                videoPlayer.play(); // 视频自动播放
+            } else {
+                videoModal.style.display = "none"; // 隐藏弹窗
+                videoPlayer.pause(); // 视频必须停止，否则关闭后还会有声音
+            }
+        }
+
+        // 增强交互：点击弹窗以外的黑色背景也可以关闭
+        window.onclick = function(event) {
+            if (event.target == videoModal) {
+                toggleVideoModal(false);
+            }
+        }
+       // --- 人民万岁隐藏彩蛋逻辑（终极版） ---
+        const wansuiBtn = document.getElementById('wansui-btn');
+        const wansuiAudio = document.getElementById('wansuiAudio');
+        let pulseInterval; // 脉动定时器
+
+        wansuiBtn.onclick = function() {
+            wansuiAudio.currentTime = 0; 
+            wansuiAudio.play();          
+            
+            // 每次点击清空旧指令，防止动画重叠
+            clearInterval(pulseInterval);
+            wansuiBtn.style.transition = ''; // 解除强制锁定
+            
+            // 启动播放状态并打出第一拍
+            wansuiBtn.classList.add('wansui-playing');
+            wansuiBtn.classList.add('wansui-peak'); 
+
+            // JS 心脏起搏器：每 0.6 秒强制切换一次呼吸状态
+            pulseInterval = setInterval(() => {
+                wansuiBtn.classList.toggle('wansui-peak');
+            }, 600);
+        };
+
+        // 当声音结束时
+        wansuiAudio.onended = function() {
+            clearInterval(pulseInterval); // 拔掉心脏起搏器
+            
+            // 核心锁死战术：强行赋予 1.2 秒的缓慢回落时间！无视你的鼠标是否还放在上面！
+            wansuiBtn.style.transition = 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+            
+            // 撤销播放状态，文字开始像涟漪一样缓慢缩回
+            wansuiBtn.classList.remove('wansui-playing', 'wansui-peak'); 
+            
+            // 1.2秒收缩彻底完毕后，解除锁定，恢复正常的敏捷 hover 功能
+            setTimeout(() => {
+                wansuiBtn.style.transition = '';
+            }, 1200);
+        };
+    </script>
+
+</body>
+</html>

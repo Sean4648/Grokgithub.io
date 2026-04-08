@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纪念伟大领袖毛主席逝世五十周年 (1976-2026)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", sans-serif;
+            background-color: #F9F9F9; 
+            color: #A80000; 
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            position: absolute; top: 0; width: 100%;
+            padding: 20px 40px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 900; 
+            color: #CC0000; 
+            text-decoration: none; 
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: left center;
+        }
+        .logo .star {
+            display: inline-block;
+            margin-right: 8px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.15); }
+        .logo:hover .star {
+            transform: scale(1.4) rotate(36deg);
+            color: #FFD700; 
+        }.nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #CC0000; 
+            text-decoration: none; 
+            font-size: 18px;
+            font-weight: bold; 
+            padding: 8px 22px; 
+            border: 2px solid #CC0000; 
+            border-radius: 30px; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        .nav-links a:hover {
+            color: #FFFFFF; 
+            background-color: #CC0000; 
+            transform: scale(1.1) translateY(-3px); 
+            box-shadow: none
+        }
+
+        .hero {
+            height: 60vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background-color: #FFFFFF; 
+            padding: 0 20px;
+            border-bottom: 3px solid #CC0000;
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; color: #DD0000; letter-spacing: 4px; margin-bottom: 15px; }
+        .hero p { font-size: 1.5rem; font-weight: bold; color: #A80000; letter-spacing: 3px; }
+
+        .memorial-content {
+            max-width: 900px;
+            margin: -50px auto 40px; 
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        /* 统一卡片样式及新增的悬停动画 (同步 index.html 风格) */
+       .card {
+            background-color: #FFFFFF;
+            border: 1px solid #FFCCCC; /* 描边变细，色调同步主页 */
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(204, 0, 0, 0.05); /* 初始阴影更轻盈 */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        /* 悬停效果：向上位移并加深阴影 */
+       .quote-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(204, 0, 0, 0.15); 
+            border: 2px solid #CC0000; /* 核心修改：不仅变红，而且加粗为 2px */
+        }
+
+        .quote-card { text-align: center; }
+        .quote-card p { font-size: 24px; font-weight: bold; color: #CC0000; font-style: italic; line-height: 1.8; margin-bottom: 20px; }
+        .quote-author { font-size: 18px; font-weight: bold; color: #A80000; text-align: right; }
+        .mia-link {
+            color: inherit; 
+            text-decoration: none; 
+            border-bottom: 1px dashed transparent; 
+            transition: all 0.3s;
+        }
+        .mia-link:hover {
+            color: #FF0000; 
+            border-bottom: 1px dashed #FF0000; 
+        }
+
+        .article-card { text-align: left; }
+        .article-card h2 { color: #CC0000; font-size: 28px; margin-bottom: 25px; text-align: center; border-bottom: 1px dashed #FFCCCC; padding-bottom: 15px; }
+        .article-card p { font-size: 18px; color: #555; margin-bottom: 20px; line-height: 1.8; text-indent: 2em; }
+
+        .music-card {
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .star-link {
+    text-decoration: none; 
+    display: inline-block;
+}
+.music-icon {
+    font-size: 60px;
+    color: #CC0000;
+    display: inline-block; 
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    cursor: pointer;
+}
+.star-link:hover .music-icon {
+    transform: rotate(360deg);
+}
+        .music-info { text-align: center; } 
+        .music-info h3 { font-size: 28px; color: #CC0000; margin-bottom: 10px; }
+        .music-info p { color: #666; font-style: italic; margin-bottom: 20px; } 
+        
+        .lyrics-display {
+            text-align: center; color: #A80000; font-size: 18px; line-height: 2.8; 
+            padding: 40px 30px; background: rgba(255, 255, 255, 0.5); border-radius: 15px; 
+            width: 100%; margin-bottom: 40px;
+        }
+        .lyrics-display strong { font-size: 28px; display: block; margin-bottom: 15px; color: #CC0000; letter-spacing: 2px; }
+
+        .btn-red { 
+            display: inline-block; background-color: #CC0000; color: white; text-decoration: none; 
+            padding: 12px 35px; border-radius: 30px; font-size: 18px; font-weight: bold; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none; cursor: pointer;
+        }
+        .btn-red:hover { 
+            background-color: #A80000; 
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: none
+        }
+
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #FFF5F5; margin: 15% auto; padding: 40px; border: 3px solid #CC0000;
+            width: 90%; max-width: 500px; border-radius: 20px; text-align: center; position: relative;
+            animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .close-btn { position: absolute; right: 20px; top: 15px; font-size: 30px; color: #CC0000; cursor: pointer; font-weight: bold; }
+        
+        audio { width: 100%; margin-top: 20px; outline: none; }
+        audio::-webkit-media-controls-panel { background-color: #FFE5E5; }
+
+        .back-nav { text-align: center; margin-bottom: 60px; }
+
+        footer { background-color: #CC0000; text-align: center; padding: 40px 20px; border-top: none; }
+        footer h3 { font-size: 26px; color: #FFFFFF; letter-spacing: 4px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .lyrics-display { font-size: 16px; line-height: 2.2; }
+            footer h3 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <a href="index.html" class="logo"><span class="star">★</span> 马列毛主义万岁！</a>
+        <div class="nav-links">
+            <a href="media.html">影音资料</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>纪念伟大领袖毛主席逝世五十周年</h1>
+        <p>1976 - 2026</p>
+    </section>
+
+    <div class="memorial-content">
+        <div class="card quote-card">
+            <p>“成千成万的先烈，为着人民的利益，在我们的前头英勇地牺牲了，让我们高举起他们的旗帜，踏着他们的血迹前进吧！”</p>
+            <div class="quote-author">—— <a href="https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19450424.htm" target="_blank" class="mia-link">《论联合政府》</a></div>
+        </div>
+
+        <div class="card article-card">
+            <h2>历史的遗产</h2>
+            <p><strong>五十年的时间，足以让一代人老去，也足以让历史的迷雾暂时掩盖真理的光芒。</strong>但正如资本主义的内生矛盾无法被永远掩盖一样，毛主席留下的理论遗产——尤其是关于无产阶级专政下继续革命的伟大探索，在今天日益极化的全球阶级矛盾中，正重新焕发出夺目的光彩。</p>
+            <p>这一遗产的核心，是对社会主义社会内部矛盾的清醒认知。毛泽东同志尖锐地指出，在社会主义阶段始终存在着阶级斗争，并突出地表现为党内走资本主义道路的当权派。这一判断是对官僚主义、特权阶层以及修正主义倾向的战略预警。</p>
+        </div>
+
+        <div class="card music-card">
+            <a href="https://www.marxists.org/chinese/maozedong/index.htm" target="_blank" class="star-link">
+    <div class="music-icon">★</div>
+</a>
+            <div class="music-info">
+                <h3>《太阳最红，毛主席最亲》</h3>
+                <p>“您的光辉思想永远照我心”</p>
+                <button class="btn-red" onclick="toggleMusicModal(true)">立即播放</button>
+            </div>
+        </div>
+
+        <div class="lyrics-display">
+            <strong>歌词</strong>
+            <p>
+                太阳最红，毛主席最亲，<br>
+                您的光辉思想永远照我心。<br>
+                春风最暖，毛主席最亲，<br>
+                你的革命路线永远指航程。<br>
+                您的功绩比天高，您的恩情比海深。<br>
+                心中的太阳永不落，<br>
+                您永远和我们心连心啊。<br>
+            </p>
+        </div>
+
+        <div class="back-nav">
+            <a href="index.html" class="btn-red" style="background-color: #A80000;">➔ 返回主页</a>
+        </div>
+    </div>
+
+    <div id="musicModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleMusicModal(false)">&times;</span>
+            <p style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">《太阳最红，毛主席最亲》</p>
+            <audio id="audioPlayer" controls>
+                <source src="sun_red.mp3" type="audio/mpeg">
+                您的浏览器不支持音频播放。
+            </audio>
+            <p style="margin-top: 30px; font-size: 14px; color: #A80000; font-style: italic;">
+                “您的革命路线永远指航程”
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <h3>人民，只有人民，才是创造世界历史的动力。</h3>
+    </footer>
+
+    <script>
+        const modal = document.getElementById('musicModal');
+        const audio = document.getElementById('audioPlayer');
+
+        function toggleMusicModal(show) {
+            if (show) {
+                modal.style.display = "block";
+                if (audio.paused) {
+                    audio.play();
+                }
+            } else {
+                modal.style.display = "none";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                toggleMusicModal(false);
+            }
+        }
+    </script>
+</body>
+</html>
